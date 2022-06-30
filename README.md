@@ -12,6 +12,11 @@
 ### Objetivo:
 > Fazer o maior número de pontos
 
+### Atenção
+> Os arquivos index.php e composer.json, são apenas para poder rodar o Game no repositório Heroku.
+> Esses arquivo não são necessário para executar o game.
+
+
 ### Personagens
 > ### Jack
 >  - piloto da nave, o player a ser controlado
