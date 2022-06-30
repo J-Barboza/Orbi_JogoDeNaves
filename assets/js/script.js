@@ -16,6 +16,10 @@ function fncStart(oldHighScore) {
     $("#backgroundGame").append("<div id='life' class='textScore'></div>");
     $("#backgroundGame").append("<div id='jackImg'</div>");
     
+    /// VARIAVEIS DE TESTE
+    var varCounter = 1;
+
+
     //Variables
     // Enemy
     const areaGameSize = parseInt($("#backgroundGame").width());
@@ -59,6 +63,7 @@ function fncStart(oldHighScore) {
     
     //Bluebat
     var vooFront = true;  // controls the side of the Bluebat movement
+    var subir = 0;
     
     // Explosion
     var timeToRemoveExplosive = 2000; // remove explosive (ms)
@@ -191,7 +196,12 @@ function fncStart(oldHighScore) {
     function fncMoveBlubat() {
 
         let leftBluebat = parseInt($("#bluebat").css("left"));
+        let topBluebat = parseInt($("#bluebat").css("top"));
         
+        if (varCounter++ < 2){
+            console.log("Top: " ,topBluebat)
+        }
+
         if (vooFront){
             $("#bluebat").css('left', leftBluebat + 1);
             $("#bluebat").css('transform', 'scaleX(-1)');
@@ -199,6 +209,7 @@ function fncStart(oldHighScore) {
             $("#bluebat").css('transform', 'scaleX(1)');
             $("#bluebat").css('left', leftBluebat - 1.8);
         }
+        //$("#bluebat").css('top', subir+=5)
 
         if (leftBluebat > 1030){
             vooFront = false;
@@ -242,18 +253,19 @@ function fncStart(oldHighScore) {
     }
 
     function fncCollision() {
-        var collision1 = ($("#player").collision($("#enemy1")));
-        var collision2 = ($("#player").collision($("#enemy2")));
-        var collision3 = ($("#shot").collision($("#enemy1")));
-        var collision4 = ($("#shot").collision($("#enemy2")));
-        var collision5 = ($("#player").collision($("#friend")));
-        var collision6 = ($("#enemy2").collision($("#friend")));
-        var collision7 = ($("#bluebat").collision($("#friend")));
-        var collision8 = ($("#missile").collision($("#friend")));
-        var collision9 = ($("#missile").collision($("#player")));
+        var collision01 = ($("#player").collision($("#enemy1")));
+        var collision02 = ($("#player").collision($("#enemy2")));
+        var collision03 = ($("#shot").collision($("#enemy1")));
+        var collision04 = ($("#shot").collision($("#enemy2")));
+        var collision05 = ($("#player").collision($("#friend")));
+        var collision06 = ($("#enemy2").collision($("#friend")));
+        var collision07 = ($("#bluebat").collision($("#friend")));
+        var collision08 = ($("#missile").collision($("#friend")));
+        var collision09 = ($("#missile").collision($("#player")));
+        var collision10 = ($("#enemy1").collision($("#friend")));
 
         // player com o enemy1
-        if (collision1.length > 0) {
+        if (collision01.length > 0) {
             atualLife--;
             enemy1X = parseInt($("#enemy1").css("left"));
             enemy1Y = parseInt($("#enemy1").css("top"));
@@ -265,7 +277,7 @@ function fncStart(oldHighScore) {
         }
 
         // player com o enemy2 
-        if (collision2.length > 0) {
+        if (collision02.length > 0) {
             atualLife--;
             enemy2X = parseInt($("#enemy2").css("left"));
             enemy2Y = parseInt($("#enemy2").css("top"));
@@ -278,7 +290,7 @@ function fncStart(oldHighScore) {
         }
 
         // Shot and enemy1
-        if (collision3.length > 0) {
+        if (collision03.length > 0) {
             initialSpeed = initialSpeed + increasesEnemy1Speed;
             points += pointsToKillEnemy1;
             enemy1X = parseInt($("#enemy1").css("left"));
@@ -292,7 +304,7 @@ function fncStart(oldHighScore) {
         }
 
         // Shot and enemy2
-        if (collision4.length > 0) {
+        if (collision04.length > 0) {
             initialSpeed += increasesEnemy2Speed;
             points += pointsToKillEnemy2;
             enemy2X = parseInt($("#enemy2").css("left"));
@@ -305,7 +317,7 @@ function fncStart(oldHighScore) {
         }
 
         // player and friend
-        if (collision5.length > 0) {
+        if (collision05.length > 0) {
 
             savedFriends++;
 
@@ -315,7 +327,7 @@ function fncStart(oldHighScore) {
         }
 
         //Enemy 2 and friend
-        if (collision6.length > 0) {
+        if (collision06.length > 0) {
 
             friendX = parseInt($("#friend").css("left"));
             friendY = parseInt($("#friend").css("top"));
@@ -326,23 +338,23 @@ function fncStart(oldHighScore) {
             fncRestartFriend();
 
         }
-
+        
         //Friend and BlueBat
-        if (collision7.length > 0) {
-
+        if (collision07.length > 0) {
+            
             points += extraPointsBlueBat;
             bluebatX = parseInt($("#bluebat").css("left"));
             bluebatY = parseInt($("#bluebat").css("top"));
-
+            
             fncExplosion3(bluebatX, bluebatY);
             $("#bluebat").remove();
             $('#friend').remove();
             fncRestartFriend();
         }
-
+        
         //Friend and missile
-        if (collision8.length > 0) {
-
+        if (collision08.length > 0) {
+            
             // perdidos++;
             friendX = parseInt($("#friend").css("left"));
             friendY = parseInt($("#friend").css("top"));
@@ -351,23 +363,36 @@ function fncStart(oldHighScore) {
             ableMissile = true // after remove missile, able to new attach
             fncFriendDie(friendX, friendY);
             $("#friend").remove();
-
+            
             fncRestartFriend();
         }
-
+        
         //Player and missile
-        if (collision9.length > 0) {
-
+        if (collision09.length > 0) {
+            
             atualLife--;
             playerX = parseInt($("#player").css("left"));
             playerY = parseInt($("#player").css("top"));
-
+            
             $("#missile").remove();
             $("#player").remove();
             
             ableMissile = true // after remove missile, able to new attach
             fncExplosion1(playerX, playerY);
             fncRestartPlayer();
+        }
+
+        //Enemy 1 and friend
+        if (collision10.length > 0) {
+
+            friendX = parseInt($("#friend").css("left"));
+            friendY = parseInt($("#friend").css("top"));
+            
+            fncFriendDie(friendX, friendY);
+            $("#friend").remove();
+
+            fncRestartFriend();
+
         }
     }
 

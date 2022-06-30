@@ -1,6 +1,6 @@
 @font-face {
     font-family: cartoonFont;
-	src:url(/assets/font/Cartoon_Regular_5.ttf);
+	src:url('/assets/font/Cartoon_Regular_5.ttf');
 }
 
 p {
@@ -223,7 +223,7 @@ body {
 }
 
 .clBluebat {
-	background-image:url('/assets/img/blueBat.png');
+	background-image:url('ssets/img/blueBat.png');
 	animation:bluebatfly .7s steps(11) infinite;
 	-webkit-animation: bluebatfly .7s steps(11) infinite;
     -moz-animation: bluebatfly .7s steps(11) infinite;
@@ -499,4 +499,10 @@ body {
     position: absolute;
     left: 940px;
     top: 5px;
+}
+
+@media (max-width: 300px) {
+	html {
+		font-size: 40%;
+	}
 }
